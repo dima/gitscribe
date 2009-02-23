@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title>Class: GitScribe::Options</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+ 
+    <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+ 
+        function toggleSource( id )
+        {
+          var elem
+          var link
+ 
+          if( document.getElementById )
+          {
+            elem = document.getElementById( id )
+            link = document.getElementById( "l_" + id )
+          }
+          else if ( document.all )
+          {
+            elem = eval( "document.all." + id )
+            link = eval( "document.all.l_" + id )
+          }
+          else
+            return false;
+ 
+          if( elem.style.display == "block" )
+          {
+            elem.style.display = "none"
+            link.innerHTML = "show source"
+          }
+          else
+          {
+            elem.style.display = "block"
+            link.innerHTML = "hide source"
+          }
+        }
+ 
+        function openCode( url )
+        {
+          window.open( url, "SOURCE_CODE", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=480,width=750" ).focus();
+        }
+      // ]]>
+    </script>
+  </head>
+ 
+  <body>
+  <table width="100%" border='0' cellpadding='0' cellspacing='0' class='banner'><tr>
+  <td class="file-title"><span class="file-title-prefix">Class</span><br />GitScribe::Options</td>
+  <td align="right">
+    <table cellspacing="0" cellpadding="2">
+      <tr valign="top">
+        <td>In:</td>
+        <td>
+<a href="../../files/lib/gitscribe/options_rb.html">lib/gitscribe/options.rb</a>
+        </td>
+      </tr>
+    <tr>
+      <td>Parent:</td>
+      <td>
+Hash
+     </td>
+   </tr>
+         </table>
+        </td>
+        </tr>
+      </table>
+ <!-- banner header -->
+ 
+  <div id="bodyContent">
+      <div id="content">
+ 
+ 
+ 
+ 
+  <div class="sectiontitle">Methods</div>
+  <ul>
+  <li><a href="#M000004">default_output</a></li>
+  <li><a href="#M000003">new</a></li>
+  </ul>
+ 
+ 
+ 
+ 
+ 
+  <div class="sectiontitle">Attributes</div>
+  <table border='0' cellpadding='5'>
+  <tr valign='top'>
+    <td class='attr-rw'>
+[R]
+    </td>
+    <td class='attr-name'>opts</td>
+    <td class='attr-desc'></td>
+  </tr>
+  </table>
+ 
+<div class="sectiontitle">Public Class methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000003"></a><b>new</b>(args)
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000003_source')" id="l_M000003_source">show source</a> ]</p>
+  <div id="M000003_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitscribe/options.rb, line 5</span>
+ 5:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">args</span>)
+ 6:       <span class="ruby-keyword kw">super</span>()
+ 7: 
+ 8:       <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:title</span>] = <span class="ruby-value str">&quot;Cool Tutorial&quot;</span>
+ 9:       <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:location</span>] = <span class="ruby-value str">&quot;Vancouver, BC&quot;</span>
+10:       
+11:       <span class="ruby-ivar">@opts</span> = <span class="ruby-constant">OptionParser</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">o</span><span class="ruby-operator">|</span>
+12:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">banner</span> = <span class="ruby-node">&quot;Usage: #{File.basename($0)} [options] reponame\ne.g. #{File.basename($0)} cool-tutorial&quot;</span>
+13: 
+14:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">'--output [FILE]'</span>, <span class="ruby-value str">'Output file to generate blog post to'</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">output</span><span class="ruby-operator">|</span>
+15:           <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:output</span>] = <span class="ruby-identifier">output</span>
+16:         <span class="ruby-keyword kw">end</span>
+17: 
+18:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">'--title [TITLE]'</span>, <span class="ruby-value str">'Blog post title to use'</span>, <span class="ruby-node">&quot;Default: #{self[:title]}&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">title</span><span class="ruby-operator">|</span>
+19:           <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:title</span>] = <span class="ruby-identifier">title</span>
+20:           <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:output</span>] = <span class="ruby-identifier">default_output</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:output</span>]
+21:         <span class="ruby-keyword kw">end</span>
+22: 
+23:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on</span>(<span class="ruby-value str">'--location [LOCATION]'</span>, <span class="ruby-value str">'Add geo location to the blog post'</span>, <span class="ruby-node">&quot;Default: #{self[:location]}&quot;</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">location</span><span class="ruby-operator">|</span>
+24:           <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:location</span>] = <span class="ruby-identifier">location</span>
+25:         <span class="ruby-keyword kw">end</span>
+26: 
+27:         <span class="ruby-identifier">o</span>.<span class="ruby-identifier">on_tail</span>(<span class="ruby-value str">'-h'</span>, <span class="ruby-value str">'--help'</span>, <span class="ruby-value str">'display this help and exit'</span>) <span class="ruby-keyword kw">do</span>
+28:           <span class="ruby-keyword kw">self</span>[<span class="ruby-identifier">:show_help</span>] = <span class="ruby-keyword kw">true</span>
+29:         <span class="ruby-keyword kw">end</span>
+30:       <span class="ruby-keyword kw">end</span>
+31:       
+32:       <span class="ruby-ivar">@opts</span>.<span class="ruby-identifier">parse!</span>(<span class="ruby-identifier">args</span>)
+33:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+<div class="sectiontitle">Public Instance methods</div>
+<div class="method">
+  <div class="title">
+    <a name="M000004"></a><b>default_output</b>()
+  </div>
+<div class="sourcecode">
+  <p class="source-link">[ <a href="javascript:toggleSource('M000004_source')" id="l_M000004_source">show source</a> ]</p>
+  <div id="M000004_source" class="dyn-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/gitscribe/options.rb, line 35</span>
+35:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_output</span>
+36:       <span class="ruby-node">&quot;#{Date.today.strftime(&quot;%Y-%m-%d&quot;)}-#{self[:title].gsub(/\s/, '-').downcase}.textile&quot;</span>
+37:     <span class="ruby-keyword kw">end</span>
+</pre>
+  </div>
+</div>
+</div>
+</div>
+
+  </div>
+ 
+    </body>
+</html>
