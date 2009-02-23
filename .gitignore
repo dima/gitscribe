@@ -1,0 +1,8 @@
+.DS_Store
+coverage
+pkg
+rdoc
+tags
+test/tmp
+test/version_tmp
+tmp
