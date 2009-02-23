@@ -24,11 +24,14 @@ class GitScribe
   
     private
     def parse_diff(patch, type)
-      header, code = patch.split(/@@ -\d+,\d+ \+\d+,\d+ @@/)
+      offset = patch.index(/@@ -\d+,\d+ \+\d+,\d+ @@/) - 1
+      header = patch.slice!(0 .. offset)
       target_file = /diff --git a\/(.*?) b\/(.*?)/.match(header)[1]
-      code = code.split("\n").map { |l| l[1..-1] }.join("\n") if type == "new"
-      code = code.gsub(/\t/m, "  ")
-      [code, target_file]
+      patch = patch.split("\n").select do |l| 
+        !l.include?("No newline at end of file") 
+      end.map { |l| l[1..-1] unless l.match(/@@ -\d+,\d+ \+\d+,\d+ @@/) }.join("\n") if type == "new"
+      patch = patch.gsub(/\t/m, "  ")
+      [patch, target_file]
     end
   
     # needs to be configurable
