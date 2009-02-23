@@ -32,7 +32,6 @@ class GitScribe
         tags.each_index do |i|
           chapter = Chapter.new(tags[i])
           g.log.between(tags[i], tags[i + 1]).each { |c| add_section(chapter.sections, c) } if i + 1 < tags.size
-          puts "processing chapter: " + tags[i]
           chapters << chapter if !chapter.sections.empty?
         end
       end
