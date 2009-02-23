@@ -18,7 +18,7 @@ class GitScribe
       @diff.select { |f| valid_file(f.path) }.map do |f|
         type = f.type == "new" ? file_type(f.path) : "diff"
         code, target_file = parse_diff(f.patch, f.type)
-        "File: #{target_file}\n{% highlight #{type} %}#{code}\n{% endhighlight %}\n" 
+        "File: #{target_file}\n\n{% highlight #{type} %}\n#{code}\n{% endhighlight %}\n\n" 
       end.join
     end
   
