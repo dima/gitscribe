@@ -21,7 +21,7 @@ class GitScribe
       g = Git.open(arguments.first)
 
       tags = Array.new
-      g.tags.each { |t| tags << t.name }
+      g.tags.sort_by { |x| g.object(x.objectish).date }.each { |t| tags << t.name }
 
       chapters = Array.new
       if tags.empty?
@@ -32,6 +32,7 @@ class GitScribe
         tags.each_index do |i|
           chapter = Chapter.new(tags[i])
           g.log.between(tags[i], tags[i + 1]).each { |c| add_section(chapter.sections, c) } if i + 1 < tags.size
+          puts "processing chapter: " + tags[i]
           chapters << chapter if !chapter.sections.empty?
         end
       end
