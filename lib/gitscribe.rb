@@ -26,12 +26,12 @@ class GitScribe
       chapters = Array.new
       if tags.empty?
         chapter = Chapter.new
-        g.log.each { |c| add_section(chapter.sections, c) }
+        g.log.each { |c| chapter.sections << c }
         chapters << chapter
       else
         tags.each_index do |i|
           chapter = Chapter.new(tags[i])
-          g.log.between(tags[i], tags[i + 1]).each { |c| add_section(chapter.sections, c) } if i + 1 < tags.size
+          g.log.between(tags[i], tags[i + 1]).each { |c| chapter.sections << c } if i + 1 < tags.size
           chapters << chapter if !chapter.sections.empty?
         end
       end
